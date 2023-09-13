@@ -119,7 +119,7 @@ export function SideBar(props: { className?: string }) {
       }`}
     >
       <div className={styles["sidebar-header"]}>
-        <div className={styles["sidebar-title"]}>AIZY CHAT</div>
+        <div className={styles["sidebar-title"]}>KoolGPT</div>
         <div className={styles["sidebar-sub-title"]}>
           Build your own AI assistant.
         </div>
