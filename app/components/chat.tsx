@@ -328,172 +328,172 @@ function useScrollToBottom() {
   };
 }
 
-export function ChatActions(props: {
-  showPromptModal: () => void;
-  scrollToBottom: () => void;
-  showPromptHints: () => void;
-  onSpeechStart: () => void;
-  onBarding: () => void;
-  onClauding: () => void;
-  onChinese: () => void;
-  setSpeaking: (param: boolean) => void;
-  hitBottom: boolean;
-  recording: boolean;
-  barding: boolean;
-  clauding: boolean;
-  chinese: boolean;
-  speaking: boolean;
-}) {
-  const config = useAppConfig();
-  const navigate = useNavigate();
-  const chatStore = useChatStore();
+  export function ChatActions(props: {
+    showPromptModal: () => void;
+    scrollToBottom: () => void;
+    showPromptHints: () => void;
+    onSpeechStart: () => void;
+    onBarding: () => void;
+    onClauding: () => void;
+    onChinese: () => void;
+    setSpeaking: (param: boolean) => void;
+    hitBottom: boolean;
+    recording: boolean;
+    barding: boolean;
+    clauding: boolean;
+    chinese: boolean;
+    speaking: boolean;
+  }) {
+    const config = useAppConfig();
+    const navigate = useNavigate();
+    const chatStore = useChatStore();
 
-  // switch themes
-  const theme = config.theme;
-  function nextTheme() {
-    const themes = [Theme.Auto, Theme.Light, Theme.Dark];
-    const themeIndex = themes.indexOf(theme);
-    const nextIndex = (themeIndex + 1) % themes.length;
-    const nextTheme = themes[nextIndex];
-    config.update((config) => (config.theme = nextTheme));
-  }
-
-  // stop all responses
-  const couldStop = ChatControllerPool.hasPending();
-  const stopAll = () => ChatControllerPool.stopAll();
-
-  const playVoiceOfAnswer = () => {
-    if ("speechSynthesis" in window) {
-      props.setSpeaking(true);
-      doSpeechSynthesis(
-        chatStore.currentSession().messages[
-          chatStore.currentSession().messages.length - 1
-        ].content,
-        () => {
-          props.setSpeaking(false);
-        },
-      );
-    } else {
-      toast.error("Does not support speechSynthesis");
+    // switch themes
+    const theme = config.theme;
+    function nextTheme() {
+      const themes = [Theme.Auto, Theme.Light, Theme.Dark];
+      const themeIndex = themes.indexOf(theme);
+      const nextIndex = (themeIndex + 1) % themes.length;
+      const nextTheme = themes[nextIndex];
+      config.update((config) => (config.theme = nextTheme));
     }
-  };
 
-  const stopVoiceOfAnswer = () => {
-    stopSpeechSysthesis();
-    props.setSpeaking(false);
-  };
+    // stop all responses
+    const couldStop = ChatControllerPool.hasPending();
+    const stopAll = () => ChatControllerPool.stopAll();
 
-  return (
-    <div className={chatStyle["chat-input-actions"]}>
-      <Toaster />
-      {couldStop && (
-        <div
-          className={`${chatStyle["chat-input-action"]} clickable`}
-          onClick={stopAll}
-        >
-          <StopIcon />
-        </div>
-      )}
-      {!props.hitBottom && (
-        <div
-          className={`${chatStyle["chat-input-action"]} clickable`}
-          onClick={props.scrollToBottom}
-        >
-          <BottomIcon />
-        </div>
-      )}
-      {props.hitBottom && (
-        <div
-          className={`${chatStyle["chat-input-action"]} clickable`}
-          onClick={props.showPromptModal}
-        >
-          <SettingsIcon />
-        </div>
-      )}
+    const playVoiceOfAnswer = () => {
+      if ("speechSynthesis" in window) {
+        props.setSpeaking(true);
+        doSpeechSynthesis(
+          chatStore.currentSession().messages[
+            chatStore.currentSession().messages.length - 1
+          ].content,
+          () => {
+            props.setSpeaking(false);
+          },
+        );
+      } else {
+        toast.error("Does not support speechSynthesis");
+      }
+    };
 
-      <div
-        className={`${chatStyle["chat-input-action"]} clickable`}
-        onClick={nextTheme}
-      >
-        {theme === Theme.Auto ? (
-          <AutoIcon />
-        ) : theme === Theme.Light ? (
-          <LightIcon />
-        ) : theme === Theme.Dark ? (
-          <DarkIcon />
-        ) : null}
-      </div>
+    const stopVoiceOfAnswer = () => {
+      stopSpeechSysthesis();
+      props.setSpeaking(false);
+    };
 
-      <div
-        className={`${chatStyle["chat-input-action"]} clickable`}
-        onClick={props.showPromptHints}
-      >
-        <PromptIcon />
-      </div>
-
-      <div
-        className={`${chatStyle["chat-input-action"]} clickable`}
-        onClick={() => {
-          navigate(Path.Masks);
-        }}
-      >
-        <MaskIcon />
-      </div>
-
-      <div
-        className={`${chatStyle["chat-input-action"]} clickable`}
-        onClick={() => {
-          chatStore.updateCurrentSession((session) => {
-            if (session.clearContextIndex === session.messages.length) {
-              session.clearContextIndex = -1;
-            } else {
-              session.clearContextIndex = session.messages.length;
-              session.memoryPrompt = ""; // will clear memory
-            }
-          });
-        }}
-      >
-        <BreakIcon />
-      </div>
-
-      <div
-        className={`${chatStyle["chat-input-action"]} clickable`}
-        onClick={props.onSpeechStart}
-      >
-        {props.recording ? <MicrophoneIcon /> : <MicrophoneOffIcon />}
-      </div>
-
-      <div
-        className={`${chatStyle["chat-input-action"]} clickable`}
-        onClick={props.onBarding}
-      >
-        {props.barding ? <GoogleBardIcon /> : <GoogleBardOffIcon />}
-      </div>
-
-      <div
-        className={`${chatStyle["chat-input-action"]} clickable`}
-        onClick={props.onClauding}
-      >
-        {props.clauding ? <ClaudeIcon className="w-16" /> : <ClaudeOffIcon />}
-      </div>
-
-      <div
-        className={`${chatStyle["chat-input-action"]} clickable`}
-        onClick={props.onChinese}
-      >
-        {props.chinese ? <ChineseIcon /> : <EnglishIcon />}
-      </div>
-
-      <div className={`${chatStyle["chat-input-action"]} clickable`}>
-        {props.speaking ? (
-          <PlayerStopIcon onClick={stopVoiceOfAnswer} />
-        ) : (
-          <PlayerIcon onClick={playVoiceOfAnswer} />
+    return (
+      <div className={chatStyle["chat-input-actions"]}>
+        <Toaster />
+        {couldStop && (
+          <div
+            className={`${chatStyle["chat-input-action"]} clickable`}
+            onClick={stopAll}
+          >
+            <StopIcon />
+          </div>
         )}
+        {!props.hitBottom && (
+          <div
+            className={`${chatStyle["chat-input-action"]} clickable`}
+            onClick={props.scrollToBottom}
+          >
+            <BottomIcon />
+          </div>
+        )}
+        {props.hitBottom && (
+          <div
+            className={`${chatStyle["chat-input-action"]} clickable`}
+            onClick={props.showPromptModal}
+          >
+            <SettingsIcon />
+          </div>
+        )}
+
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
+          onClick={nextTheme}
+        >
+          {theme === Theme.Auto ? (
+            <AutoIcon />
+          ) : theme === Theme.Light ? (
+            <LightIcon />
+          ) : theme === Theme.Dark ? (
+            <DarkIcon />
+          ) : null}
+        </div>
+
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
+          onClick={props.showPromptHints}
+        >
+          <PromptIcon />
+        </div>
+
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
+          onClick={() => {
+            navigate(Path.Masks);
+          }}
+        >
+          <MaskIcon />
+        </div>
+
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
+          onClick={() => {
+            chatStore.updateCurrentSession((session) => {
+              if (session.clearContextIndex === session.messages.length) {
+                session.clearContextIndex = -1;
+              } else {
+                session.clearContextIndex = session.messages.length;
+                session.memoryPrompt = ""; // will clear memory
+              }
+            });
+          }}
+        >
+          <BreakIcon />
+        </div>
+
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
+          onClick={props.onSpeechStart}
+        >
+          {props.recording ? <MicrophoneIcon /> : <MicrophoneOffIcon />}
+        </div>
+
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
+          onClick={props.onBarding}
+        >
+          {props.barding ? <GoogleBardIcon /> : <GoogleBardOffIcon />}
+        </div>
+
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
+          onClick={props.onClauding}
+        >
+          {props.clauding ? <ClaudeIcon className="w-16" /> : <ClaudeOffIcon />}
+        </div>
+
+        <div
+          className={`${chatStyle["chat-input-action"]} clickable`}
+          onClick={props.onChinese}
+        >
+          {props.chinese ? <ChineseIcon /> : <EnglishIcon />}
+        </div>
+
+        <div className={`${chatStyle["chat-input-action"]} clickable`}>
+          {props.speaking ? (
+            <PlayerStopIcon onClick={stopVoiceOfAnswer} />
+          ) : (
+            <PlayerIcon onClick={playVoiceOfAnswer} />
+          )}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
 export function Chat() {
   type RenderMessage = ChatMessage & { preview?: boolean };
