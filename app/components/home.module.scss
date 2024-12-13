@@ -4,17 +4,15 @@
   border-radius: 20px;
   box-shadow: var(--shadow);
   color: var(--black);
-  background-color: var(--white);
   min-width: 600px;
   min-height: 480px;
-  max-width: 1200px;
 
   display: flex;
   overflow: hidden;
   box-sizing: border-box;
 
-  width: var(--window-width);
-  height: var(--window-height);
+  width: 100vw; 
+  height: 100vh; 
 }
 
 .container {
@@ -42,7 +40,7 @@
   width: var(--sidebar-width);
   box-sizing: border-box;
   padding: 20px;
-  background-color: var(--second);
+  background-color: #EBEBEB;
   display: flex;
   flex-direction: column;
   box-shadow: inset -2px 0px 2px 0px rgb(0, 0, 0, 0.05);
@@ -61,6 +59,10 @@
       }
     }
   }
+  .sidebar-link {
+  text-decoration: none; /* Ensures no underline */
+  color: inherit; /* Optionally inherit color from parent */
+}
 }
 
 .sidebar-drag {
@@ -435,7 +437,7 @@
 }
 
 .chat-message-user > .chat-message-container > .chat-message-item {
-  background-color: var(--second);
+  background-color: #69a506;
 }
 
 .chat-message-actions {
