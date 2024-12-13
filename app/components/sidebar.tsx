@@ -27,6 +27,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMobileScreen } from "../utils";
 import dynamic from "next/dynamic";
 import { showToast } from "./ui-lib";
+import Image from "next/image";
 
 const ChatList = dynamic(async () => (await import("./chat-list")).ChatList, {
   loading: () => null,
@@ -119,16 +120,45 @@ export function SideBar(props: { className?: string }) {
       }`}
     >
       <div className={styles["sidebar-header"]}>
-        <div className={styles["sidebar-title"]}>KoolGPT</div>
+        <div className={styles["sidebar-title"]}>
+          <Image
+            src="/logo.svg"
+            alt="logo"
+            width={120}
+            height={50}
+            draggable={false}
+            className="select-none min-w-[120px]"
+          />
+          {/* <div className="w-full !mt-6">
+              <div className="items-center p-3 bg-[#69a506] rounded-lg overflow-hidden">
+                <button
+                  className="relative w-full font-semibold text-white tracking-[0] leading-[normal] flex gap-3"
+                  onClick={() => {
+                    if (config.dontShowMaskSplashScreen) {
+                      chatStore.newSession();
+                      navigate(Path.Chat);
+                    } else {
+                      navigate(Path.NewChat);
+                    }
+                  }}
+                >
+                  <img
+                    src="/images/add-icon.svg"
+                    className="h-[22px] w-[19px]"
+                  />
+                  <span className="text-sm whitespace-nowrap">New Chat</span>
+                </button>
+              </div>
+            </div> */}
+        </div>
         <div className={styles["sidebar-sub-title"]}>
           Build your own AI assistant.
         </div>
-        <div className={styles["sidebar-logo"] + " no-dark"}>
+        {/* <div className={styles["sidebar-logo"] + " no-dark"}>
           <ChatGptIcon />
-        </div>
+        </div> */}
       </div>
-
-      <div className={styles["sidebar-header-bar"]}>
+      {/* <div className={styles["sidebar-header-bar"]}>
         <IconButton
           icon={<MaskIcon />}
           text={shouldNarrow ? undefined : Locale.Mask.Name}
@@ -136,8 +166,33 @@ export function SideBar(props: { className?: string }) {
           onClick={() => navigate(Path.NewChat, { state: { fromHome: true } })}
           shadow
         />
-      </div>
-
+      </div>{" "} */}
+      <Link to={Path.Settings} className={styles["sidebar-link"]}>
+        <div className={styles["sidebar-header-bar"]}>
+          <IconButton
+            icon={<SettingsIcon />}
+            text={shouldNarrow ? undefined : "Settings"}
+            className={styles["sidebar-bar-button"]}
+            shadow
+          />
+        </div>
+      </Link>
+      <div className={styles["sidebar-header-bar"]}>
+        <IconButton
+          icon={<AddIcon />}
+          text={shouldNarrow ? undefined : Locale.Home.NewChat}
+          className={styles["sidebar-bar-button"]}
+          onClick={() => {
+            if (config.dontShowMaskSplashScreen) {
+              chatStore.newSession();
+              navigate(Path.Chat);
+            } else {
+              navigate(Path.NewChat);
+            }
+          }}
+          shadow
+        />
+      </div>{" "}
       <div
         className={styles["sidebar-body"]}
         onClick={(e) => {
@@ -148,7 +203,6 @@ export function SideBar(props: { className?: string }) {
       >
         <ChatList narrow={shouldNarrow} />
       </div>
-
       <div className={styles["sidebar-tail"]}>
         <div className={styles["sidebar-actions"]}>
           <div className={styles["sidebar-action"] + " " + styles.mobile}>
@@ -161,13 +215,13 @@ export function SideBar(props: { className?: string }) {
               }}
             />
           </div>
-          <div className={styles["sidebar-action"]}>
+          {/* <div className={styles["sidebar-action"]}>
             <Link to={Path.Settings}>
               <IconButton icon={<SettingsIcon />} shadow />
             </Link>
-          </div>
+          </div> */}
         </div>
-        <div>
+        {/* <div>
           <IconButton
             icon={<AddIcon />}
             text={shouldNarrow ? undefined : Locale.Home.NewChat}
@@ -181,9 +235,8 @@ export function SideBar(props: { className?: string }) {
             }}
             shadow
           />
-        </div>
+        </div> */}
       </div>
-
       <div
         className={styles["sidebar-drag"]}
         onMouseDown={(e) => onDragMouseDown(e as any)}
