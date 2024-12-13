@@ -136,18 +136,14 @@ export function ChatActions(props: {
   }
 
   // stop all responses
-  const [isChecked, setIsChecked] = useState(false)
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked)
-  }
+    setIsChecked(!isChecked);
+  };
   return (
-    <div  >
-      <div
-      className={styles["sidebar-header-bar"]}
-        
-        onClick={nextTheme}
-      >
+    <div>
+      <div className={styles["sidebar-header-bar"]} onClick={nextTheme}>
         {theme === Theme.Auto ? (
           <AutoIcon />
         ) : theme === Theme.Light ? (
@@ -157,7 +153,7 @@ export function ChatActions(props: {
         ) : null}
       </div>
       <div className="w-full flex items-center justify-center">
-  {/* <div className="bg-[#d3d3d3] dark:bg-[#0E0F13] rounded-full flex items-center p-1 w-24 h-10">
+        {/* <div className="bg-[#d3d3d3] dark:bg-[#0E0F13] rounded-full flex items-center p-1 w-24 h-10">
     <button
       className="bg-[#69A606] dark:bg-[#0E0F13] text-white dark:text-white rounded-full w-10 h-8 flex items-center justify-center transition-all duration-300 ease-in-out"
       onClick={nextTheme}
@@ -174,7 +170,7 @@ export function ChatActions(props: {
       <img className="w-[20px] h-[20px]" alt="Dark Mode" src="/images/dark.svg" />
     </button>
   </div> */}
-    <div className='relative'>
+        {/* <div className='relative'>
           <input
             type='checkbox'
             checked={isChecked}
@@ -183,9 +179,8 @@ export function ChatActions(props: {
           />
           <div className='block h-8 w-14 rounded-full bg-[#E5E7EB]'></div>
           <div className='dot absolute left-1 top-1 h-6 w-6 rounded-full bg-white transition'></div>
-        </div>
-</div>
-
+        </div> */}
+      </div>
     </div>
   );
 }
@@ -206,6 +201,44 @@ export function SideBar(props: { className?: string }) {
         shouldNarrow && styles["narrow-sidebar"]
       }`}
     >
+      <div className=" w-full flex flex-row justify-between ">
+        {" "}
+        <div>
+          <ChatActions
+            showPromptModal={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            scrollToBottom={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            showPromptHints={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            onSpeechStart={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            onBarding={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            onClauding={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            onChinese={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            setSpeaking={function (param: boolean): void {
+              throw new Error("Function not implemented.");
+            }}
+            hitBottom={false}
+            recording={false}
+            barding={false}
+            clauding={false}
+            chinese={false}
+            speaking={false}
+          />
+        </div>{" "}
+        
+      </div>
       <div className={styles["sidebar-header"]}>
         <div className={styles["sidebar-title"]}>
           <Image
@@ -306,24 +339,6 @@ export function SideBar(props: { className?: string }) {
         className={styles["sidebar-drag"]}
         onMouseDown={(e) => onDragMouseDown(e as any)}
       ></div>
-       <ChatActions showPromptModal={function (): void {
-        throw new Error("Function not implemented.");
-      } } scrollToBottom={function (): void {
-        throw new Error("Function not implemented.");
-      } } showPromptHints={function (): void {
-        throw new Error("Function not implemented.");
-      } } onSpeechStart={function (): void {
-        throw new Error("Function not implemented.");
-      } } onBarding={function (): void {
-        throw new Error("Function not implemented.");
-      } } onClauding={function (): void {
-        throw new Error("Function not implemented.");
-      } } onChinese={function (): void {
-        throw new Error("Function not implemented.");
-      } } setSpeaking={function (param: boolean): void {
-        throw new Error("Function not implemented.");
-      } } hitBottom={false} recording={false} barding={false} clauding={false} chinese={false} speaking={false}/>
     </div>
-   
   );
 }
