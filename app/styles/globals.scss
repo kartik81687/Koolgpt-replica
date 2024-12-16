@@ -3,6 +3,7 @@
 
 @mixin light {
   --theme: light;
+  --red:#EBEBEB;
 
   /* color */
   --white: white;
@@ -23,8 +24,9 @@
 }
 
 @mixin dark {
-  --theme: dark;
+  --red:#202227 ;
 
+  --theme: dark;
   /* color */
   --white: rgb(30, 30, 30);
   --black: rgb(187, 187, 187);
