@@ -615,7 +615,7 @@ export function Chat() {
           speechRecognition.stop();
         } else {
           setRecording(false);
-          onSpeechError(new Error("not supported"));
+          // onSpeechError(new Error("not supported"));
         }
       });
     localStorage.setItem(LAST_INPUT_KEY, userInput);
@@ -765,7 +765,7 @@ export function Chat() {
           };
           speechRecognition.start();
         } else {
-          onSpeechError(new Error("1not supported"));
+          // onSpeechError(new Error("1not supported"));
         }
       } else {
         if (speechRecognition) {
@@ -773,7 +773,7 @@ export function Chat() {
           setRecording(false);
         } else {
           setRecording(false);
-          onSpeechError(new Error("2not supported"));
+          // onSpeechError(new Error("2not supported"));
         }
       }
     } catch (e) {
