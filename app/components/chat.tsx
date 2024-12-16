@@ -431,14 +431,7 @@ function useScrollToBottom() {
           <PromptIcon />
         </div>
 
-        <div
-          className={`${chatStyle["chat-input-action"]} clickable`}
-          onClick={() => {
-            navigate(Path.Masks);
-          }}
-        >
-          <MaskIcon />
-        </div>
+       
 
         <div
           className={`${chatStyle["chat-input-action"]} clickable`}
@@ -477,13 +470,7 @@ function useScrollToBottom() {
           {props.clauding ? <ClaudeIcon className="w-16" /> : <ClaudeOffIcon />}
         </div>
 
-        <div
-          className={`${chatStyle["chat-input-action"]} clickable`}
-          onClick={props.onChinese}
-        >
-          {props.chinese ? <ChineseIcon /> : <EnglishIcon />}
-        </div>
-
+     
         <div className={`${chatStyle["chat-input-action"]} clickable`}>
           {props.speaking ? (
             <PlayerStopIcon onClick={stopVoiceOfAnswer} />
