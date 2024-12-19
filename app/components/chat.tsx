@@ -485,12 +485,12 @@ export function ChatActions(props: {
         {props.recording ? <MicrophoneIcon /> : <MicrophoneOffIcon />}
       </div>
 
-      <div
+{/*       <div
         className={`${chatStyle["chat-input-action"]} clickable`}
         onClick={props.onBarding}
       >
         {props.barding ? <GoogleBardIcon /> : <GoogleBardOffIcon />}
-      </div>
+      </div> */}
 
       <div
         className={`${chatStyle["chat-input-action"]} clickable`}
